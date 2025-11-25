@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waste History | Smart Waste-to-Green Credits</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .teal-bg {
+            background-color: #008080;
+        }
+        .teal-text {
+            color: #008080;
+        }
+        .yellow-bg {
+            background-color: #FFD700;
+        }
+        .yellow-text {
+            color: #FFD700;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md py-4 px-6 flex justify-between items-center">
+        <div class="flex items-center">
+            <i data-feather="repeat" class="teal-text mr-2"></i>
+            <h1 class="text-xl font-bold teal-text">Smart Waste-to-Green Credits</h1>
+        </div>
+        <div class="flex items-center space-x-4">
+            <a href="dashboard.html" class="font-medium hover:text-teal-600">Dashboard</a>
+            <div class="relative">
+                <button class="flex items-center space-x-1">
+                    <a href="dashboard.html"><img src="http://static.photos/people/200x200/1" alt="Profile" class="w-8 h-8 rounded-full"></a>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Waste History Content -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-2xl font-bold">Your Waste History</h2>
+            <a href="waste-upload.html" class="teal-bg text-white px-4 py-2 rounded-md hover:bg-teal-700 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus mr-2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                New Report
+            </a>
+</div>
+
+        <!-- Filter Options -->
+        <div class="bg-white rounded-xl shadow-md p-4 mb-8">
+            <div class="flex flex-col md:flex-row md:items-center md:space-x-6 space-y-4 md:space-y-0">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Waste Type</label>
+                    <select class="border border-gray-300 rounded-md px-3 py-2 w-full md:w-40">
+                        <option>All Types</option>
+                        <option>Plastic</option>
+                        <option>Paper</option>
+                        <option>Metal</option>
+                        <option>Glass</option>
+                        <option>Organic</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                    <select class="border border-gray-300 rounded-md px-3 py-2 w-full md:w-40">
+                        <option>All Statuses</option>
+                        <option>Approved</option>
+                        <option>Pending</option>
+                        <option>Rejected</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Date Range</label>
+                    <select class="border border-gray-300 rounded-md px-3 py-2 w-full md:w-40">
+                        <option>All Time</option>
+                        <option>Last 7 Days</option>
+                        <option>Last 30 Days</option>
+                        <option>Last 90 Days</option>
+                    </select>
+                </div>
+                <div class="md:ml-auto">
+                    <button class="teal-bg text-white px-4 py-2 rounded-md hover:bg-teal-700 w-full md:w-auto">
+                        Apply Filters
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Reports List -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Weight</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Coins</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reports-table" class="bg-white divide-y divide-gray-200">
+    <!-- Reports will be rendered here by JS -->
+</tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="flex items-center justify-between mt-6">
+            <div class="text-sm text-gray-500">
+                Showing <span class="font-medium">1</span> to <span class="font-medium">5</span> of <span class="font-medium">12</span> reports
+            </div>
+            <div class="flex space-x-2">
+                <button class="px-3 py-1 border border-teal-500 teal-bg text-white rounded-md text-sm font-medium">
+                    1
+                </button>
+                <button onclick="c" class="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                    2
+                </button>
+            </div>
+        </div>
+    </div>
+    <script>
+        feather.replace();
+        
+        // Handle file upload click
+        document.querySelector('.border-dashed').addEventListener('click', function() {
+            document.getElementById('file-upload').click();
+        });
+
+        // Check for coin update in URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const newCoins = urlParams.get('coins');
+        if (newCoins) {
+            // Update the coins display (this would normally be done via backend)
+            const coinElements = document.querySelectorAll('.yellow-text');
+            coinElements.forEach(el => {
+                if (el.textContent.includes('1,250')) {
+                    el.textContent = newCoins;
+                }
+            });
+        }
+    </script>
+    <script>
+    feather.replace();
+
+    // Sample data: 12 reports
+    const reports = [
+        { date: 'Jun 15, 2023', time: '10:45 AM', type: 'Plastic', icon: 'package', color: 'blue', weight: '8.5 kg', status: 'Approved', coins: '+85', statusColor: 'green', view: 'trash-gallery.html' },
+        { date: 'Jun 12, 2023', time: '03:22 PM', type: 'Paper', icon: 'file-text', color: 'amber', weight: '5.2 kg', status: 'Approved', coins: '+52', statusColor: 'green', view: '#' },
+        { date: 'Jun 8, 2023', time: '09:15 AM', type: 'Metal', icon: 'box', color: 'gray', weight: '3.7 kg', status: 'Approved', coins: '+37', statusColor: 'green', view: '#' },
+        { date: 'Jun 5, 2023', time: '11:30 AM', type: 'Glass', icon: 'droplet', color: 'purple', weight: '2.1 kg', status: 'Pending', coins: '-', statusColor: 'yellow', view: '#' },
+        { date: 'May 28, 2023', time: '04:45 PM', type: 'Organic', icon: 'leaf', color: 'green', weight: '6.8 kg', status: 'Rejected', coins: '-', statusColor: 'red', view: 'trash-gallery.html' },
+        // Add 7 more reports here for demo
+        { date: 'May 20, 2023', time: '01:10 PM', type: 'Plastic', icon: 'package', color: 'blue', weight: '7.0 kg', status: 'Approved', coins: '+70', statusColor: 'green', view: '#' },
+        { date: 'May 18, 2023', time: '02:30 PM', type: 'Paper', icon: 'file-text', color: 'amber', weight: '4.5 kg', status: 'Pending', coins: '-', statusColor: 'yellow', view: '#' },
+        { date: 'May 15, 2023', time: '09:00 AM', type: 'Metal', icon: 'box', color: 'gray', weight: '2.8 kg', status: 'Rejected', coins: '-', statusColor: 'red', view: '#' },
+        { date: 'May 12, 2023', time: '10:20 AM', type: 'Glass', icon: 'droplet', color: 'purple', weight: '3.2 kg', status: 'Approved', coins: '+32', statusColor: 'green', view: '#' },
+        { date: 'May 10, 2023', time: '11:45 AM', type: 'Organic', icon: 'leaf', color: 'green', weight: '5.0 kg', status: 'Approved', coins: '+50', statusColor: 'green', view: '#' },
+        { date: 'May 8, 2023', time: '12:30 PM', type: 'Plastic', icon: 'package', color: 'blue', weight: '6.3 kg', status: 'Pending', coins: '-', statusColor: 'yellow', view: '#' },
+        { date: 'May 5, 2023', time: '01:15 PM', type: 'Paper', icon: 'file-text', color: 'amber', weight: '3.9 kg', status: 'Approved', coins: '+39', statusColor: 'green', view: '#' }
+    ];
+
+    function renderReports(page = 1) {
+        const reportsTable = document.getElementById('reports-table');
+        reportsTable.innerHTML = '';
+        const start = (page - 1) * 5;
+        const end = start + 5;
+        const pageReports = reports.slice(start, end);
+        pageReports.forEach(report => {
+            reportsTable.innerHTML += `
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm font-medium text-gray-900">${report.date}</div>
+                        <div class="text-sm text-gray-500">${report.time}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                            <div class="bg-${report.color}-100 text-${report.color}-800 p-1 rounded-full mr-2">
+                                <i data-feather="${report.icon}" class="w-4 h-4"></i>
+                            </div>
+                            <div class="text-sm font-medium">${report.type}</div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900">${report.weight}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-${report.statusColor}-100 text-${report.statusColor}-800">
+                            ${report.status}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap ${report.coins !== '-' ? 'yellow-text font-bold' : 'text-gray-500'}">
+                        ${report.coins}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <a href="${report.view}" class="teal-text hover:text-teal-700 mr-3">View</a>
+                        <a href="#" class="text-red-600 hover:text-red-900">Delete</a>
+                    </td>
+                </tr>
+            `;
+        });
+        feather.replace();
+    }
+
+    // Initial render
+    renderReports(1);
+
+    // Pagination buttons
+    document.querySelectorAll('.flex.space-x-2 button').forEach((btn, idx) => {
+        btn.addEventListener('click', function() {
+            if (btn.textContent.trim() === 'Previous') renderReports(1);
+            else if (btn.textContent.trim() === 'Next') renderReports(3);
+            else renderReports(Number(btn.textContent.trim()));
+        });
+    });
+</script>
+<script> 
+
+function filterReports() {
+    const selects = document.querySelectorAll('.bg-white select');
+    const type = selects[0].value;
+    const status = selects[1].value;
+    const dateRange = selects[2].value;
+
+    let filtered = reports.slice();
+
+    // Filter by type
+    if (type !== 'All Types') {
+        filtered = filtered.filter(r => r.type === type);
+    }
+    // Filter by status
+    if (status !== 'All Statuses') {
+        filtered = filtered.filter(r => r.status === status);
+    }
+    // Filter by date range (simple demo)
+    if (dateRange !== 'All Time') {
+        const now = new Date();
+        filtered = filtered.filter(r => {
+            const reportDate = new Date(r.date + ' ' + r.time);
+            if (dateRange === 'Last 7 Days') {
+                return (now - reportDate) / (1000 * 60 * 60 * 24) <= 7;
+            }
+            if (dateRange === 'Last 30 Days') {
+                return (now - reportDate) / (1000 * 60 * 60 * 24) <= 30;
+            }
+            if (dateRange === 'Last 90 Days') {
+                return (now - reportDate) / (1000 * 60 * 60 * 24) <= 90;
+            }
+            return true;
+        });
+    }
+
+    // Render first page of filtered results
+    renderReportsFiltered(filtered, 1);
+}
+
+function renderReportsFiltered(filteredReports, page = 1) {
+    const reportsTable = document.getElementById('reports-table');
+    reportsTable.innerHTML = '';
+    const start = (page - 1) * 5;
+    const end = start + 5;
+    const pageReports = filteredReports.slice(start, end);
+    pageReports.forEach(report => {
+        reportsTable.innerHTML += `
+            <tr>
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm font-medium text-gray-900">${report.date}</div>
+                    <div class="text-sm text-gray-500">${report.time}</div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="flex items-center">
+                        <div class="bg-${report.color}-100 text-${report.color}-800 p-1 rounded-full mr-2">
+                            <i data-feather="${report.icon}" class="w-4 h-4"></i>
+                        </div>
+                        <div class="text-sm font-medium">${report.type}</div>
+                    </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-gray-900">${report.weight}</div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-${report.statusColor}-100 text-${report.statusColor}-800">
+                        ${report.status}
+                    </span>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap ${report.coins !== '-' ? 'yellow-text font-bold' : 'text-gray-500'}">
+                    ${report.coins}
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    <a href="${report.view}" class="teal-text hover:text-teal-700 mr-3">View</a>
+                    <a href="#" class="text-red-600 hover:text-red-900">Delete</a>
+                </td>
+            </tr>
+        `;
+    });
+    feather.replace();
+}
+
+// Attach filter button event
+document.querySelector('.teal-bg.text-white.px-4.py-2.rounded-md.hover\\:bg-teal-700.w-full.md\\:w-auto').onclick = filterReports;
+
+// ...existing code...
+</script>
+
+</body>
+</html>

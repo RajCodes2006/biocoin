@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Stats | Smart Waste-to-Green Credits</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .teal-bg {
+            background-color: #008080;
+        }
+        .teal-text {
+            color: #008080;
+        }
+        .yellow-bg {
+            background-color: #FFD700;
+        }
+        .yellow-text {
+            color: #FFD700;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md py-4 px-6 flex justify-between items-center">
+        <div class="flex items-center">
+            <i data-feather="repeat" class="teal-text mr-2"></i>
+            <h1 class="text-xl font-bold teal-text">Smart Waste-to-Green Credits</h1>
+        </div>
+        <div class="flex items-center space-x-4">
+            <a href="dashboard.html" class="font-medium hover:text-teal-600">Dashboard</a>
+            <div class="relative">
+                <button class="flex items-center space-x-1">
+                    <a href="dashboard.html"><img src="http://static.photos/people/200x200/1" alt="Profile" class="w-8 h-8 rounded-full"></a>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- City Stats Content -->
+    <div class="container mx-auto px-4 py-8">
+        <h2 class="text-2xl font-bold mb-8">Mumbai Community Stats</h2>
+
+        <!-- Stats Overview -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <div class="flex items-center mb-4">
+                    <div class="teal-bg text-white p-2 rounded-full mr-4">
+                        <i data-feather="users"></i>
+                    </div>
+                    <h3 class="font-bold text-lg">Active Users</h3>
+                </div>
+                <p class="text-3xl font-bold teal-text">12,548</p>
+                <p class="text-gray-500 mt-2">+1,240 this month</p>
+            </div>
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <div class="flex items-center mb-4">
+                    <div class="teal-bg text-white p-2 rounded-full mr-4">
+                        <i data-feather="trash-2"></i>
+                    </div>
+                    <h3 class="font-bold text-lg">Waste Collected</h3>
+                </div>
+                <p class="text-3xl font-bold teal-text">48.7 tons</p>
+                <p class="text-gray-500 mt-2">+5.2 tons this week</p>
+            </div>
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <div class="flex items-center mb-4">
+                    <div class="teal-bg text-white p-2 rounded-full mr-4">
+                        <i data-feather="award"></i>
+                    </div>
+                    <h3 class="font-bold text-lg">Rewards Redeemed</h3>
+                </div>
+                <p class="text-3xl font-bold teal-text">3,842</p>
+                <p class="text-gray-500 mt-2">Total value: ₹768.42(5BC=1₹)</p>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <!-- Waste Types Chart -->
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <h3 class="font-bold text-lg mb-4">Waste Types Collected</h3>
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="w-full md:w-1/2 h-64">
+                        <canvas id="wasteChart"></canvas>
+                    </div>
+                    <div class="w-full md:w-1/2 mt-4 md:mt-0 md:pl-6">
+                        <div class="space-y-3">
+                            <div class="flex items-center">
+                                <div class="w-4 h-4 rounded-full bg-[#008080] mr-2"></div>
+                                <span>Plastic (35%)</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-4 h-4 rounded-full bg-[#FFD700] mr-2"></div>
+                                <span>Paper (25%)</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-4 h-4 rounded-full bg-[#4CAF50] mr-2"></div>
+                                <span>Metal (15%)</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-4 h-4 rounded-full bg-[#2196F3] mr-2"></div>
+                                <span>Glass (10%)</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-4 h-4 rounded-full bg-[#9C27B0] mr-2"></div>
+                                <span>Organic (15%)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Monthly Collection Chart -->
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <h3 class="font-bold text-lg mb-4">Monthly Waste Collection</h3>
+                <div class="h-64">
+                    <canvas id="monthlyChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Contributors -->
+        <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+            <h3 class="font-bold text-lg mb-4">Top Contributors This Month</h3>
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rank</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Waste Collected</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Bio Coins</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="yellow-bg text-white rounded-full w-8 h-8 flex items-center justify-center font-bold">1</div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <img src="http://static.photos/people/200x200/2" alt="" class="w-10 h-10 rounded-full mr-3">
+                                    <div>
+                                        <div class="font-medium">Priya Sharma</div>
+                                        <div class="text-gray-500">Andheri West</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-gray-900">142 kg</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap yellow-text font-bold">
+                                1,420
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="bg-gray-200 text-gray-800 rounded-full w-8 h-8 flex items-center justify-center font-bold">2</div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <img src="http://static.photos/people/200x200/3" alt="" class="w-10 h-10 rounded-full mr-3">
+                                    <div>
+                                        <div class="font-medium">Rahul Patel</div>
+                                        <div class="text-gray-500">Bandra East</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-gray-900">128 kg</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap yellow-text font-bold">
+                                1,280
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="bg-amber-200 text-amber-800 rounded-full w-8 h-8 flex items-center justify-center font-bold">3</div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <img src="http://static.photos/people/200x200/4" alt="" class="w-10 h-10 rounded-full mr-3">
+                                    <div>
+                                        <div class="font-medium">Amit Singh</div>
+                                        <div class="text-gray-500">Dadar West</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-gray-900">115 kg</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap yellow-text font-bold">
+                                1,150
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Impact Metrics -->
+        <div class="bg-white rounded-xl shadow-md p-6">
+            <h3 class="font-bold text-lg mb-4">Environmental Impact</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="text-center">
+                    <div class="teal-bg text-white p-4 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                        <i data-feather="cloud-rain"></i>
+                    </div>
+                    <h4 class="font-bold mb-1">Water Saved</h4>
+                    <p class="text-gray-600">1.2 million liters</p>
+                </div>
+                <div class="text-center">
+                    <div class="teal-bg text-white p-4 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                        <i data-feather="wind"></i>
+                    </div>
+                    <h4 class="font-bold mb-1">CO₂ Reduced</h4>
+                    <p class="text-gray-600">48.2 tons</p>
+                </div>
+                <div class="text-center">
+                    <div class="teal-bg text-white p-4 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                        <i data-feather="battery"></i>
+                    </div>
+                    <h4 class="font-bold mb-1">Energy Saved</h4>
+                    <p class="text-gray-600">12,400 kWh</p>
+                </div>
+                <div class="text-center">
+                    <div class="teal-bg text-white p-4 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                        <i data-feather="tree"></i>
+                    </div>
+                    <h4 class="font-bold mb-1">Equivalent Trees</h4>
+                    <p class="text-gray-600">1,840 planted</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        feather.replace();
+        
+        // Initialize charts
+        document.addEventListener('DOMContentLoaded', function() {
+            // Waste Types Chart
+            const wasteCtx = document.getElementById('wasteChart').getContext('2d');
+            const wasteChart = new Chart(wasteCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['Plastic', 'Paper', 'Metal', 'Glass', 'Organic'],
+                    datasets: [{
+                        data: [35, 25, 15, 10, 15],
+                        backgroundColor: [
+                            '#008080',
+                            '#FFD700',
+                            '#4CAF50',
+                            '#2196F3',
+                            '#9C27B0'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    cutout: '60%'
+                }
+            });
+
+            // Monthly Collection Chart
+            const monthlyCtx = document.getElementById('monthlyChart').getContext('2d');
+            const monthlyChart = new Chart(monthlyCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Waste Collected (tons)',
+                        data: [3.5, 3.8, 6.1, 7.3, 8.9, 11.7],
+                        backgroundColor: '#008080',
+                        borderColor: '#008080',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 2
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
